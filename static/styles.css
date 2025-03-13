@@ -1,0 +1,36 @@
+div {
+    margin: 20px;
+    text-align: center;
+}
+
+
+
+.navbar {
+    justify-content: right;
+    text-align: left;
+    border-bottom: 2px solid gray;
+    gap: 5px;
+}
+
+.navbar-brand {
+    font-weight: 500;
+    margin-right: auto;
+}
+
+.table {
+    text-align: center;
+}
+
+#user_info {
+    display: flex;
+    text-align: center;
+    gap: 20px;
+    justify-content: center;
+}
+
+#percentages {
+    display: flex;
+    text-align: center;
+    gap: 20px;
+    justify-content: center;
+}

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Expenses
+{% endblock %}
+
+{% block main %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flashes alert-warning">
+                {% for message in messages %}
+                    <strong>{{ message }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Spend Money</h3>
+        </div>
+        <div class="card-body">
+            <form action="/expenses" method="POST">
+                <input name="amount" placeholder="Amount" type="text" autocomplete="off">
+                <select name="category">
+                    <option selected disabled>Category</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+                <label for="date"></label>
+                <input type="date" name="date">
+                <input name="notes" placeholder="Notes" type="text" autocomplete="off">
+                <button type="submit" class="btn btn-danger">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+{% block main %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <div>
+        <h2>{{ date }}</h2>
+        <form action="/" method="POST" id="date_config">
+            <label for="date">Select Date:</label>
+            <input type="month" id="date" name="date">
+        </form>
+        <section class="container" id="user_info">
+            <p>Income: {{ income | usd }}</p>
+            <p>Expenses: {{ expenses | usd }}</p>
+            <p>Balance: {{ balance | usd }}</p>
+        </section>
+
+        {% if rows %}
+            <table class="table">
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Notes</th>
+                <th></th>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.amount | usd }}</td>
+                    <td>{{ row.category }}</td>
+                    <td>{{ row.date }}</td>
+                    <td>{{ row.notes }}</td>
+                    <td>
+                        <form action="/delete" method="POST">
+                            <input name="id" type="hidden" value="{{ row.id }}">
+                            <input name="amount" type="hidden" value="{{ row.amount }}">
+                            <button class="btn btn-outline-danger" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No transactions this month</p>
+        {% endif %}
+        <div id="percentages">
+            <p>Expenses: </p>
+            {% for category, percentage in percentages.items() %}
+                <p>{{ category }}: {{ percentage | percentage }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+<script>
+    let dateInput = document.getElementById("date");
+    let dateConfig = document.getElementById("date_config");
+
+    // Auto submit date
+    dateInput.addEventListener("change", function() {
+        dateConfig.submit();
+    });
+</script>
+{% endblock %}
